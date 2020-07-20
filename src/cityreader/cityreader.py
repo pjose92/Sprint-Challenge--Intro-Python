@@ -9,7 +9,7 @@ class City:
      self.lon = lon
   
   def __repr__(self):
-    return f"City({self.name}, {self.lat},{self.lon})"
+    return f"City({self.name}, {self.lat}, {self.lon})"
 
 
 # We have a collection of US cities with population over 750,000 stored in the
