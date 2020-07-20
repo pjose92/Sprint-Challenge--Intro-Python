@@ -1,5 +1,15 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
+import csv
+
+class City:
+  def __init__(self, name, lat, lon):
+     self.name = name
+     self.lat = lat
+     self.lon = lon
+  
+  def __repr__(self):
+    return f"City({self.name}, {self.lat},{self.lon})"
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -21,8 +31,13 @@ def cityreader(cities=[]):
   # Ensure that the lat and lon valuse are all floats
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    
-    return cities
+  file = open("cities.csv")
+  csv_reader = csv.reader(file)
+  next(csv_reader)
+  
+  for row in csv_reader:
+    cities.append(City(row[0], float(row[3], float(row[4]))))
+  return cities
 
 cityreader(cities)
 
@@ -61,11 +76,37 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+user_input_1 = input("Enter lat1, lon1: ").split(",")
+lat1 = float(user_input_1[0])
+lon1 = float(user_input_1[1])
+
+user_input_2 = input("Enter lat2, lon2: ").split(",")
+lat2 = float(user_input_2[0])
+lon2 = float(user_input_2[1])
+
+
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
-  within = []
-  
-  # Go through each city and check to see if it falls within 
-  # the specified coordinates.
+    within = []
 
-  return within
+    # TODO Ensure that the lat and lon valuse are all floats
+    # Go through each city and check to see if it falls within
+    # the specified coordinates.
+
+    # normalize data, find out max and min of coordinates
+    lat_max = max(lat1, lat2)
+    lat_min = min(lat1, lat2)
+    lon_max = max(lon1, lon2)
+    lon_min = min(lon1, lon2)
+
+    for city in cities:
+        if city.lat > lat_min and city.lat < lat_max and city.lon > lon_min and city.lon < lon_max:
+            within.append(city)
+
+    for city in within:
+        print(f"{city.name}: ({city.lat}, {city.lon})")
+
+    return within
+
+
+cityreader_stretch(lat1, lon1, lat2, lon2, cities)
